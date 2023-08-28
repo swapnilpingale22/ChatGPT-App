@@ -1,1 +1,1 @@
-const String modelUrl = "https://api.openai.com/v1/models";
+const String apiKey = "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";

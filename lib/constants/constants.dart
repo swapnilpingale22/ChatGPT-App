@@ -4,7 +4,7 @@ Color scaffoldBgColor = const Color(0xFF343541);
 Color cardColor = const Color(0xFF444654);
 Color textColor = Colors.white;
 
-const String apiKey = "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";
+const String modelUrl = "https://api.openai.com/v1/models";
 
 List<String> models = [
   "Model 1",
