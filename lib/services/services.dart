@@ -16,13 +16,14 @@ class Services {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
+                flex: 1,
                 child: TextWidget(
                   label: 'Choosen Model: ',
                   fontsize: 16,
                 ),
               ),
               Flexible(
-                flex: 1,
+                flex: 2,
                 child: ModelDropDownWidget(),
               ),
             ],

@@ -6,32 +6,33 @@ Color textColor = Colors.white;
 
 const String modelUrl = "https://api.openai.com/v1/models";
 
-List<String> models = [
-  "Model 1",
-  "Model 2",
-  "Model 3",
-  "Model 4",
-  "Model 5",
-  "Model 6",
-];
+// List<String> models = [
+//   "Model 1",
+//   "Model 2",
+//   "Model 3",
+//   "Model 4",
+//   "Model 5",
+//   "Model 6",
+// ];
 
-List<DropdownMenuItem<String>> getModelsItem() {
-  List<DropdownMenuItem<String>> modelsItems = models.map(
-    (String model) {
-      return DropdownMenuItem<String>(
-        value: model,
-        child: Text(
-          model,
-          style: TextStyle(
-            fontSize: 15,
-            color: textColor,
-          ),
-        ),
-      );
-    },
-  ).toList();
-  return modelsItems;
-}
+// List<DropdownMenuItem<String>> getModelsItem() {
+//   List<DropdownMenuItem<String>> modelsItems =
+//    models.map(
+//     (String model) {
+//       return DropdownMenuItem<String>(
+//         value: model,
+//         child: Text(
+//           model,
+//           style: TextStyle(
+//             fontSize: 15,
+//             color: textColor,
+//           ),
+//         ),
+//       );
+//     },
+//   ).toList();
+//   return modelsItems;
+// }
 
 final chatMessages = [
   {
