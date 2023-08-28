@@ -4,6 +4,8 @@ Color scaffoldBgColor = const Color(0xFF343541);
 Color cardColor = const Color(0xFF444654);
 Color textColor = Colors.white;
 
+const String apiKey = "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";
+
 List<String> models = [
   "Model 1",
   "Model 2",
