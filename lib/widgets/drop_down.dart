@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:voice_assistant/widgets/text_widget.dart';
 import '../constants/constants.dart';
 import '../models/chatmodels_model.dart';
@@ -47,11 +48,15 @@ class _ModelDropDownWidgetState extends State<ModelDropDownWidget> {
             ),
           );
         } else {
-          return Container(
-            color: Colors.red,
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Empty Data"),
+          return Flexible(
+            flex: 2,
+            child: SizedBox(
+              height: 30,
+              width: 300,
+              child: SpinKitThreeBounce(
+                color: textColor,
+                size: 18,
+              ),
             ),
           );
         }
