@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:voice_assistant/providers/chat_provider.dart';
 import 'package:voice_assistant/providers/models_provider.dart';
 import 'constants/constants.dart';
 import 'screens/home_screen.dart';
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => ModelsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ChatProvider(),
         ),
       ],
       child: MaterialApp(
