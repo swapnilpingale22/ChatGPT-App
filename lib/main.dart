@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:voice_assistant/providers/models_provider.dart';
 import 'constants/constants.dart';
 import 'screens/home_screen.dart';
 
@@ -12,17 +14,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ChatGPT AI',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: scaffoldBgColor,
-        appBarTheme: AppBarTheme(
-          backgroundColor: cardColor,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ModelsProvider(),
         ),
-        useMaterial3: true,
+      ],
+      child: MaterialApp(
+        title: 'ChatGPT AI',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: scaffoldBgColor,
+          appBarTheme: AppBarTheme(
+            backgroundColor: cardColor,
+          ),
+          useMaterial3: true,
+        ),
+        home: const SplashScreen(),
       ),
-      home: const SplashScreen(),
     );
   }
 }

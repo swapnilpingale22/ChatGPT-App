@@ -102,13 +102,7 @@ class _HomescreenState extends State<Homescreen> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () async {
-                        try {
-                          await ApiServices.getModels();
-                        } catch (e) {
-                          print('error: $e');
-                        }
-                      },
+                      onPressed: () async {},
                       icon: Icon(
                         Icons.send,
                         color: textColor,
