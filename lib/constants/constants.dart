@@ -6,3 +6,4 @@ Color textColor = Colors.white;
 
 const String modelUrl = "https://api.openai.com/v1/models";
 const String chatUrl = "https://api.openai.com/v1/completions";
+const String chatGPTUrl = "https://api.openai.com/v1/chat/completions";
