@@ -18,7 +18,7 @@ class _ModelDropDownWidgetState extends State<ModelDropDownWidget> {
   Widget build(BuildContext context) {
     final modelsProvider = Provider.of<ModelsProvider>(context, listen: false);
     currentModel = modelsProvider.getCurrentModel;
-    return FutureBuilder<List<ChatModel>>(
+    return FutureBuilder<List<ModelsModel>>(
       future: modelsProvider.getAllModels(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {

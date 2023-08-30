@@ -1,21 +1,21 @@
-class ChatModel {
+class ModelsModel {
   final String id;
   final int created;
   final String root;
 
-  ChatModel({
+  ModelsModel({
     required this.id,
     required this.created,
     required this.root,
   });
 
-  factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
+  factory ModelsModel.fromJson(Map<String, dynamic> json) => ModelsModel(
         id: json['id'],
         created: json['created'],
         root: json['root'],
       );
 
-  static List<ChatModel> modelsList(List modelSnapshot) {
-    return modelSnapshot.map((data) => ChatModel.fromJson(data)).toList();
+  static List<ModelsModel> modelsList(List modelSnapshot) {
+    return modelSnapshot.map((data) => ModelsModel.fromJson(data)).toList();
   }
 }

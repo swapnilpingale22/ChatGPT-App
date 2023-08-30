@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'package:voice_assistant/constants/constants.dart';
-import '../services/api_services.dart';
+import 'package:voice_assistant/services/api_services.dart';
+import '../models/chat_model.dart';
+import '../providers/models_provider.dart';
 import '../services/asset_manager.dart';
 import '../services/services.dart';
 import '../widgets/chat_widget.dart';
@@ -14,23 +17,32 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
-  final bool _isTyping = true;
+  bool _isTyping = false;
   late TextEditingController textEditingController;
-
+  late ScrollController _listScreollController;
+  late FocusNode focusNode;
   @override
   void initState() {
     super.initState();
+    _listScreollController = ScrollController();
     textEditingController = TextEditingController();
+    focusNode = FocusNode();
   }
 
   @override
   void dispose() {
     super.dispose();
     textEditingController.dispose();
+    focusNode.dispose();
+    _listScreollController.dispose();
   }
 
+  List<ChatModel> chatList = [];
   @override
   Widget build(BuildContext context) {
+    final modelsProvider = Provider.of<ModelsProvider>(
+      context,
+    );
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -61,12 +73,12 @@ class _HomescreenState extends State<Homescreen> {
         children: [
           Flexible(
             child: ListView.builder(
-              itemCount: chatMessages.length,
+              controller: _listScreollController,
+              itemCount: chatList.length,
               itemBuilder: (context, index) {
                 return ChatWidget(
-                  chatIndex:
-                      int.parse(chatMessages[index]['chatIndex'].toString()),
-                  msg: chatMessages[index]['message'].toString(),
+                  chatIndex: chatList[index].chatIndex,
+                  msg: chatList[index].msg,
                 );
               },
             ),
@@ -76,45 +88,86 @@ class _HomescreenState extends State<Homescreen> {
               color: textColor,
               size: 18,
             ),
-            const SizedBox(height: 10),
-            Material(
-              color: cardColor,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        style: TextStyle(
-                          color: textColor,
-                        ),
-                        controller: textEditingController,
-                        onSubmitted: (value) {
-                          //function send msg
-                        },
-                        decoration: const InputDecoration(
-                          hintText: 'Message',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () async {},
-                      icon: Icon(
-                        Icons.send,
+          ],
+          const SizedBox(height: 10),
+          Material(
+            color: cardColor,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      focusNode: focusNode,
+                      style: TextStyle(
                         color: textColor,
                       ),
+                      controller: textEditingController,
+                      onSubmitted: (value) async {
+                        await sendMessageFCT(modelsProvider: modelsProvider);
+                      },
+                      decoration: const InputDecoration(
+                        hintText: 'Message',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                        ),
+                        border: InputBorder.none,
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      await sendMessageFCT(modelsProvider: modelsProvider);
+                    },
+                    icon: Icon(
+                      Icons.send,
+                      color: textColor,
+                    ),
+                  ),
+                ],
               ),
-            )
-          ]
+            ),
+          )
         ],
       ),
     );
+  }
+
+  void scrollListToEnd() {
+    _listScreollController.animateTo(
+      _listScreollController.position.maxScrollExtent,
+      duration: const Duration(seconds: 2),
+      curve: Curves.linear,
+    );
+  }
+
+  Future<void> sendMessageFCT({modelsProvider}) async {
+    try {
+      setState(() {
+        _isTyping = true;
+        chatList.add(
+          ChatModel(
+            msg: textEditingController.text,
+            chatIndex: 0,
+          ),
+        );
+        textEditingController.clear();
+        focusNode.unfocus();
+      });
+      chatList.addAll(
+        await ApiServices.sendMessage(
+          textEditingController.text,
+          modelsProvider.getCurrentModel,
+        ),
+      );
+      setState(() {});
+    } catch (e) {
+      print("error: $e");
+    } finally {
+      setState(() {
+        scrollListToEnd();
+        _isTyping = false;
+      });
+    }
   }
 }
