@@ -49,7 +49,7 @@ class _HomescreenState extends State<Homescreen> {
           child: Image.asset(AssetManager.openAiLogo),
         ),
         title: Text(
-          'ChatGPT',
+          'ChatGPT AI',
           style: TextStyle(
             color: textColor,
             fontWeight: FontWeight.bold,
@@ -111,27 +111,56 @@ class _HomescreenState extends State<Homescreen> {
                           chatProvider: chatProvider,
                         );
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        focusColor: textColor,
                         hintText: ' How can I assist you?',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: Colors.grey,
                         ),
                         border: InputBorder.none,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: textColor,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                            50.0,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: textColor,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                            50.0,
+                          ),
+                        ),
+                        prefixIcon: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.mic,
+                            color: textColor,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () async {
-                      await sendMessageFCT(
-                        modelsProvider: modelsProvider,
-                        chatProvider: chatProvider,
-                      );
-                    },
-                    icon: Icon(
-                      Icons.send,
-                      color: textColor,
+                  Container(
+                    height: 60,
+                    margin: const EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: textColor),
+                      shape: BoxShape.circle,
                     ),
-                  ),
+                    child: IconButton(
+                      onPressed: () async {
+                        await sendMessageFCT(
+                          modelsProvider: modelsProvider,
+                          chatProvider: chatProvider,
+                        );
+                      },
+                      icon: Icon(Icons.arrow_upward_rounded, color: textColor),
+                    ),
+                  )
                 ],
               ),
             ),
