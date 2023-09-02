@@ -30,7 +30,9 @@ class ChatWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const Spacer(),
+                      Expanded(
+                        flex: 5,
                         child: Container(
                           decoration: BoxDecoration(
                             color: usertextBGColor,
@@ -48,68 +50,21 @@ class ChatWidget extends StatelessWidget {
                             vertical: 6,
                             horizontal: 15,
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              chatIndex == 0
-                                  ? TextWidget(
-                                      label: msg,
-                                      color: textColor,
-                                    )
-                                  : Expanded(
-                                      child: DefaultTextStyle(
-                                        style: TextStyle(
-                                          color: textColor,
-                                          fontSize: 18,
-                                        ),
-                                        child: AnimatedTextKit(
-                                          isRepeatingAnimation: false,
-                                          repeatForever: false,
-                                          displayFullTextOnTap: true,
-                                          totalRepeatCount: 1,
-                                          animatedTexts: [
-                                            TyperAnimatedText(
-                                              speed: const Duration(
-                                                  milliseconds: 20),
-                                              msg.trim(),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                              chatIndex == 0
-                                  ? Container()
-                                  : const Row(
-                                      children: [
-                                        Icon(
-                                          Icons.thumb_up_off_alt,
-                                          size: 16,
-                                          color: Colors.white60,
-                                        ),
-                                        SizedBox(width: 3),
-                                        Icon(
-                                          Icons.thumb_down_off_alt,
-                                          size: 16,
-                                          color: Colors.white60,
-                                        )
-                                      ],
-                                    )
-                            ],
+                          child: Expanded(
+                            child: TextWidget(
+                              label: msg,
+                              color: textColor,
+                              textAlign: TextAlign.end,
+                              fontsize: 18,
+                            ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      chatIndex == 0
-                          ? Lottie.asset(
-                              'assets/images/avatar_blue.json',
-                              height: 45,
-                              width: 45,
-                            )
-                          : Lottie.asset(
-                              'assets/images/robot_white.json',
-                              height: 35,
-                              width: 35,
-                            ),
+                      Lottie.asset(
+                        'assets/images/avatar_blue.json',
+                        height: 45,
+                        width: 45,
+                      ),
                     ],
                   )
 
@@ -118,22 +73,17 @@ class ChatWidget extends StatelessWidget {
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      chatIndex == 0
-                          ? Lottie.asset(
-                              'assets/images/avatar_blue.json',
-                              height: 40,
-                              width: 40,
-                            )
-                          : CircleAvatar(
-                              backgroundColor: bottextBGColor,
-                              child: Lottie.asset(
-                                'assets/images/robot_white.json',
-                                height: 35,
-                                width: 35,
-                              ),
-                            ),
+                      CircleAvatar(
+                        backgroundColor: bottextBGColor,
+                        child: Lottie.asset(
+                          'assets/images/robot_white.json',
+                          height: 35,
+                          width: 35,
+                        ),
+                      ),
                       const SizedBox(width: 10),
                       Expanded(
+                        flex: 6,
                         child: Container(
                           decoration: BoxDecoration(
                             color: bottextBGColor,
@@ -149,58 +99,31 @@ class ChatWidget extends StatelessWidget {
                           ),
                           padding: const EdgeInsets.symmetric(
                             vertical: 10,
-                            horizontal: 10,
+                            horizontal: 15,
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              chatIndex == 0
-                                  ? TextWidget(
-                                      label: msg,
-                                      color: textColor,
-                                    )
-                                  : Expanded(
-                                      child: DefaultTextStyle(
-                                        style: TextStyle(
-                                          color: textColor,
-                                          fontSize: 18,
-                                        ),
-                                        child: AnimatedTextKit(
-                                          isRepeatingAnimation: false,
-                                          repeatForever: false,
-                                          displayFullTextOnTap: true,
-                                          totalRepeatCount: 1,
-                                          animatedTexts: [
-                                            TyperAnimatedText(
-                                              speed: const Duration(
-                                                  milliseconds: 20),
-                                              msg.trim(),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                              chatIndex == 0
-                                  ? Container()
-                                  : const Row(
-                                      children: [
-                                        Icon(
-                                          Icons.thumb_up_off_alt,
-                                          size: 16,
-                                          color: Colors.white60,
-                                        ),
-                                        SizedBox(width: 3),
-                                        Icon(
-                                          Icons.thumb_down_off_alt,
-                                          size: 16,
-                                          color: Colors.white60,
-                                        )
-                                      ],
-                                    )
-                            ],
+                          child: Expanded(
+                            child: DefaultTextStyle(
+                              style: TextStyle(
+                                color: textColor,
+                                fontSize: 18,
+                              ),
+                              child: AnimatedTextKit(
+                                isRepeatingAnimation: false,
+                                repeatForever: false,
+                                displayFullTextOnTap: true,
+                                totalRepeatCount: 1,
+                                animatedTexts: [
+                                  TyperAnimatedText(
+                                    speed: const Duration(milliseconds: 20),
+                                    msg.trim(),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),
+                      const Spacer(),
                     ],
                   ),
           ),
