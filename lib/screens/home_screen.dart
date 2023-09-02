@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_assistant/constants/constants.dart';
 import '../providers/chat_provider.dart';
@@ -18,12 +19,12 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   bool _isTyping = false;
   late TextEditingController textEditingController;
-  late ScrollController _listScreollController;
+  late ScrollController _listScrollController;
   late FocusNode focusNode;
   @override
   void initState() {
     super.initState();
-    _listScreollController = ScrollController();
+    _listScrollController = ScrollController();
     textEditingController = TextEditingController();
     focusNode = FocusNode();
   }
@@ -33,7 +34,7 @@ class _HomescreenState extends State<Homescreen> {
     super.dispose();
     textEditingController.dispose();
     focusNode.dispose();
-    _listScreollController.dispose();
+    _listScrollController.dispose();
   }
 
   //for regular method keep this list below
@@ -46,10 +47,18 @@ class _HomescreenState extends State<Homescreen> {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Image.asset(AssetManager.openAiLogo),
+          child: Row(
+            children: [
+              Lottie.asset(
+                'assets/images/google_circle_anim.json',
+                height: 40,
+                width: 40,
+              ),
+            ],
+          ),
         ),
         title: Text(
-          'ChatGPT AI',
+          'Google Bard AI',
           style: TextStyle(
             color: textColor,
             fontWeight: FontWeight.bold,
@@ -73,7 +82,7 @@ class _HomescreenState extends State<Homescreen> {
         children: [
           Flexible(
             child: ListView.builder(
-              controller: _listScreollController,
+              controller: _listScrollController,
               itemCount: chatProvider.getChatList.length, //chatList.length,
               itemBuilder: (context, index) {
                 return ChatWidget(
@@ -90,10 +99,10 @@ class _HomescreenState extends State<Homescreen> {
               color: textColor,
               size: 18,
             ),
+            const SizedBox(height: 10),
           ],
-          const SizedBox(height: 10),
           Material(
-            color: cardColor,
+            color: scaffoldBgColor,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -112,6 +121,8 @@ class _HomescreenState extends State<Homescreen> {
                         );
                       },
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: cardColor,
                         focusColor: textColor,
                         hintText: ' How can I assist you?',
                         hintStyle: const TextStyle(
@@ -136,10 +147,19 @@ class _HomescreenState extends State<Homescreen> {
                         ),
                         prefixIcon: IconButton(
                           onPressed: () {},
-                          icon: Icon(
-                            Icons.mic,
-                            color: textColor,
-                          ),
+                          icon: _isTyping
+                              ? SizedBox(
+                                  height: 25,
+                                  width: 25,
+                                  child: CircularProgressIndicator(
+                                    color: textColor,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Icon(
+                                  Icons.mic,
+                                  color: textColor,
+                                ),
                         ),
                       ),
                     ),
@@ -150,6 +170,7 @@ class _HomescreenState extends State<Homescreen> {
                     decoration: BoxDecoration(
                       border: Border.all(color: textColor),
                       shape: BoxShape.circle,
+                      color: cardColor,
                     ),
                     child: IconButton(
                       onPressed: () async {
@@ -158,7 +179,14 @@ class _HomescreenState extends State<Homescreen> {
                           chatProvider: chatProvider,
                         );
                       },
-                      icon: Icon(Icons.arrow_upward_rounded, color: textColor),
+                      icon: _isTyping
+                          ? Image.asset(
+                              AssetManager.bardLogo,
+                              fit: BoxFit.contain,
+                              height: 30,
+                              width: 30,
+                            )
+                          : Icon(Icons.arrow_upward_rounded, color: textColor),
                     ),
                   )
                 ],
@@ -171,9 +199,9 @@ class _HomescreenState extends State<Homescreen> {
   }
 
   void scrollListToEnd() {
-    _listScreollController.animateTo(
-      _listScreollController.position.maxScrollExtent,
-      duration: const Duration(seconds: 2),
+    _listScrollController.animateTo(
+      _listScrollController.position.maxScrollExtent,
+      duration: const Duration(seconds: 10),
       curve: Curves.linear,
     );
   }
@@ -194,7 +222,7 @@ class _HomescreenState extends State<Homescreen> {
     if (textEditingController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.red,
           content: Text(
             "Please provide any text!",
             style: TextStyle(fontSize: 18),
@@ -231,7 +259,6 @@ class _HomescreenState extends State<Homescreen> {
 
       await chatProvider.sendMessageAndGetAnswers(
         msg: msg,
-        choosenModel: modelsProvider.getCurrentModel,
       );
 
       //regular method

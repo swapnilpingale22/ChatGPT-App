@@ -3,4 +3,5 @@ class AssetManager {
   static String userImage = "$imgPath/persons.png";
   static String botImage = "$imgPath/bot_logo.png";
   static String openAiLogo = "$imgPath/openai_logo.png";
+  static String bardLogo = "$imgPath/bard.gif";
 }

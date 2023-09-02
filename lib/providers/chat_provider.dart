@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:voice_assistant/services/api_services.dart';
-
 import '../models/chat_model.dart';
 
 class ChatProvider with ChangeNotifier {
@@ -14,17 +13,11 @@ class ChatProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> sendMessageAndGetAnswers(
-      {required String msg, required String choosenModel}) async {
-    if (choosenModel.toLowerCase().startsWith("gpt")) {
-      chatList.addAll(
-        await ApiServices.sendMessageGPT(msg, choosenModel),
-      );
-    } else {
-      chatList.addAll(
-        await ApiServices.sendMessage(msg, choosenModel),
-      );
-    }
+  Future<void> sendMessageAndGetAnswers({required String msg}) async {
+    chatList.addAll(
+      await ApiServices.sendMessageBard(msg),
+    );
+
     notifyListeners();
   }
 }

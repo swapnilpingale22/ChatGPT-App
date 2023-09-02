@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_assistant/providers/chat_provider.dart';
 import 'package:voice_assistant/providers/models_provider.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'ChatGPT AI',
+        title: 'Google Bard AI',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scaffoldBackgroundColor: scaffoldBgColor,
@@ -52,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -66,30 +67,61 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            AnimatedTextKit(
-              totalRepeatCount: 2,
-              animatedTexts: [
-                TyperAnimatedText(
-                  'ChatGPT',
-                  textStyle: TextStyle(
-                    fontSize: 44,
+            Lottie.asset(
+              'assets/images/person_floating3d.json',
+              height: 300,
+              width: 300,
+              frameRate: FrameRate(60),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedTextKit(
+                  totalRepeatCount: 1,
+                  animatedTexts: [
+                    TyperAnimatedText(
+                      'Google Bard',
+                      textStyle: TextStyle(
+                        fontSize: 44,
+                        color: bottextBGColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      speed: const Duration(milliseconds: 100),
+                    ),
+                  ],
+                ),
+                Text(
+                  ' ⚪',
+                  style: TextStyle(
+                    fontSize: 46,
                     color: textColor,
                     fontWeight: FontWeight.bold,
                   ),
-                  speed: const Duration(milliseconds: 100),
                 ),
               ],
             ),
-            Text(
-              ' ⚪',
-              style: TextStyle(
-                fontSize: 46,
-                color: textColor,
-                fontWeight: FontWeight.bold,
-              ),
+            Lottie.asset(
+              'assets/images/google2.json',
+              width: 200,
+              height: 200,
+              frameRate: FrameRate(60),
+              reverse: true,
+            ),
+            AnimatedTextKit(
+              totalRepeatCount: 1,
+              animatedTexts: [
+                TyperAnimatedText(
+                  'By: Swapnil Pingale',
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                    color: bottextBGColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

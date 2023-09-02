@@ -33,9 +33,9 @@ class _ModelDropDownWidgetState extends State<ModelDropDownWidget> {
             items: List<DropdownMenuItem<String>>.generate(
               snapshot.data!.length,
               (index) => DropdownMenuItem<String>(
-                  value: snapshot.data![index].root,
+                  value: snapshot.data![index].name,
                   child: Text(
-                    snapshot.data![index].root,
+                    snapshot.data![index].name,
                     style: TextStyle(
                       fontSize: 15,
                       color: textColor,

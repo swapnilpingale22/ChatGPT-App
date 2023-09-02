@@ -1,18 +1,15 @@
 class ModelsModel {
-  final String id;
-  final int created;
-  final String root;
+  final String name;
+  final String displayName;
 
   ModelsModel({
-    required this.id,
-    required this.created,
-    required this.root,
+    required this.name,
+    required this.displayName,
   });
 
   factory ModelsModel.fromJson(Map<String, dynamic> json) => ModelsModel(
-        id: json['id'],
-        created: json['created'],
-        root: json['root'],
+        name: json['name'],
+        displayName: json['displayName'],
       );
 
   static List<ModelsModel> modelsList(List modelSnapshot) {
