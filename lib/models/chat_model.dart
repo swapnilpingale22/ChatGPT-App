@@ -1,14 +1,14 @@
 class ChatModel {
-  final String msg;
-  final int chatIndex;
+  final String content;
+  final int author;
 
   ChatModel({
-    required this.msg,
-    required this.chatIndex,
+    required this.content,
+    required this.author,
   });
 
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
-        msg: json["msg"],
-        chatIndex: json["chatIndex"],
+        content: json["content"],
+        author: json["author"],
       );
 }

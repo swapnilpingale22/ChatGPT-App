@@ -37,6 +37,7 @@ class _HomescreenState extends State<Homescreen> {
     _listScrollController.dispose();
   }
 
+  // final apiResponse =  ApiServices.sendMessageBard(question);
   //for regular method keep this list below
   // List<ChatModel> chatList = [];
   @override
@@ -86,10 +87,11 @@ class _HomescreenState extends State<Homescreen> {
               itemCount: chatProvider.getChatList.length, //chatList.length,
               itemBuilder: (context, index) {
                 return ChatWidget(
-                  chatIndex: chatProvider.getChatList[index]
-                      .chatIndex, //chatList[index].chatIndex,
-                  msg: chatProvider
-                      .getChatList[index].msg, //chatList[index].msg,
+                  author: chatProvider
+                      .getChatList[index].author, //chatList[index].author,
+                  content: chatProvider
+                      .getChatList[index].content, //chatList[index].content,
+                  scrollFunction: scrollListToEnd,
                 );
               },
               addAutomaticKeepAlives: true,
@@ -125,7 +127,9 @@ class _HomescreenState extends State<Homescreen> {
                         filled: true,
                         fillColor: cardColor,
                         focusColor: textColor,
-                        hintText: ' How can I assist you?',
+                        hintText: _isTyping
+                            ? 'Please wait a moment'
+                            : ' How can I assist you?',
                         hintStyle: const TextStyle(
                           color: Colors.grey,
                         ),
@@ -202,7 +206,7 @@ class _HomescreenState extends State<Homescreen> {
   void scrollListToEnd() {
     _listScrollController.animateTo(
       _listScrollController.position.maxScrollExtent,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 4),
       curve: Curves.linear,
     );
   }

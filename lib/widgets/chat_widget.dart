@@ -7,12 +7,14 @@ import 'package:lottie/lottie.dart';
 class ChatWidget extends StatelessWidget {
   const ChatWidget({
     super.key,
-    required this.msg,
-    required this.chatIndex,
+    required this.content,
+    required this.author,
+    required this.scrollFunction,
   });
 
-  final String msg;
-  final int chatIndex;
+  final String content;
+  final int author;
+  final VoidCallback scrollFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class ChatWidget extends StatelessWidget {
           color: scaffoldBgColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: chatIndex == 0
+            child: author == 0
 
                 //user text
 
@@ -51,7 +53,7 @@ class ChatWidget extends StatelessWidget {
                             horizontal: 15,
                           ),
                           child: TextWidget(
-                            label: msg,
+                            label: content,
                             color: textColor,
                             textAlign: TextAlign.end,
                             fontsize: 18,
@@ -109,10 +111,11 @@ class ChatWidget extends StatelessWidget {
                               repeatForever: false,
                               displayFullTextOnTap: true,
                               totalRepeatCount: 1,
+                              onTap: () => scrollFunction,
                               animatedTexts: [
                                 TyperAnimatedText(
                                   speed: const Duration(milliseconds: 20),
-                                  msg.trim(),
+                                  content.trim(),
                                 ),
                               ],
                             ),

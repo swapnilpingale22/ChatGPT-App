@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:voice_assistant/models/chat_model.dart';
+// import 'package:voice_assistant/models/chat_model.dart';
 import 'package:voice_assistant/models/chatmodels_model.dart';
 import '../constants/constants.dart';
 
 class ApiServices {
+  static final List<Map<String, String>> messages = [];
+
   static Future<List<ModelsModel>> getModels() async {
     try {
       var response = await http.get(
@@ -32,7 +34,12 @@ class ApiServices {
 
   //Send messages with Bard
 
-  static Future<List<ChatModel>> sendMessageBard(String message) async {
+  static Future<String> sendMessageBard(String message) async {
+    messages.add({
+      'author': '0',
+      'content': message,
+    });
+
     try {
       var response = await http.post(
         Uri.parse(bardUrl),
@@ -44,6 +51,7 @@ class ApiServices {
             "prompt": {
               "messages": [
                 {
+                  "author": "0",
                   "content": message,
                 }
               ]
@@ -51,25 +59,26 @@ class ApiServices {
           },
         ),
       );
+      // print(response.body);
 
-      Map jsonResponse = jsonDecode(response.body);
-      if (jsonResponse['error'] != null) {
-        throw HttpException(jsonResponse['error']['message']);
+      if (response.statusCode == 200) {
+        // print('API working');
+        String content = jsonDecode(response.body)['candidates'][0]['content'];
+        content = content.trim();
+
+        messages.add({
+          'author': '1',
+          'content': content,
+        });
+        // print('content: ${content}');
+        return content;
       }
-      List<ChatModel> chatList = [];
-      if (jsonResponse['candidates'].length > 0) {
-        chatList = List.generate(
-          jsonResponse["candidates"].length,
-          (index) => ChatModel(
-            msg: jsonResponse['candidates'][index]['content'],
-            chatIndex: 1,
-          ),
-        );
-      }
-      return chatList;
+      String content = jsonDecode(response.body)['error']['message'];
+
+      return content;
     } catch (e) {
       print('Error in sendMessageBard: $e');
-      rethrow;
+      return e.toString();
     }
   }
 }

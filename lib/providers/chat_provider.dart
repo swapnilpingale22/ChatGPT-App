@@ -3,19 +3,31 @@ import 'package:voice_assistant/services/api_services.dart';
 import '../models/chat_model.dart';
 
 class ChatProvider with ChangeNotifier {
-  List<ChatModel> chatList = [];
-  List<ChatModel> get getChatList {
-    return chatList;
+  final List messages = [];
+
+  List get getChatList {
+    return messages;
   }
 
   void addUserMessage({required String msg}) {
-    chatList.add(ChatModel(msg: msg, chatIndex: 0));
+    messages.add(
+      ChatModel(
+        content: msg,
+        author: 0,
+      ),
+    );
+
     notifyListeners();
   }
 
   Future<void> sendMessageAndGetAnswers({required String msg}) async {
-    chatList.addAll(
-      await ApiServices.sendMessageBard(msg),
+    String responseMessage = await ApiServices.sendMessageBard(msg);
+
+    messages.add(
+      ChatModel(
+        content: responseMessage,
+        author: 1,
+      ),
     );
 
     notifyListeners();
