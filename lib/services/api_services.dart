@@ -57,10 +57,7 @@ class ApiServices {
         throw HttpException(jsonResponse['error']['message']);
       }
       List<ChatModel> chatList = [];
-      if (jsonResponse['candidates'].length >= 0) {
-        print(
-            'jsonResponse[candidates][content] : ${jsonResponse['candidates'][0]['content']}');
-
+      if (jsonResponse['candidates'].length > 0) {
         chatList = List.generate(
           jsonResponse["candidates"].length,
           (index) => ChatModel(
@@ -71,7 +68,7 @@ class ApiServices {
       }
       return chatList;
     } catch (e) {
-      print('error: $e');
+      print('Error in sendMessageBard: $e');
       rethrow;
     }
   }

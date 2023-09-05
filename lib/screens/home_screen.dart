@@ -92,6 +92,7 @@ class _HomescreenState extends State<Homescreen> {
                       .getChatList[index].msg, //chatList[index].msg,
                 );
               },
+              addAutomaticKeepAlives: true,
             ),
           ),
           if (_isTyping) ...[
@@ -201,7 +202,7 @@ class _HomescreenState extends State<Homescreen> {
   void scrollListToEnd() {
     _listScrollController.animateTo(
       _listScrollController.position.maxScrollExtent,
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 2),
       curve: Curves.linear,
     );
   }
@@ -253,6 +254,9 @@ class _HomescreenState extends State<Homescreen> {
         );
         textEditingController.clear();
         focusNode.unfocus();
+
+        // Scroll to the end of the list
+        scrollListToEnd();
       });
 
       //Provider method
@@ -261,6 +265,8 @@ class _HomescreenState extends State<Homescreen> {
         msg: msg,
       );
 
+      // Scroll to the end of the list after receiving an answer
+      scrollListToEnd();
       //regular method
 
       // chatList.addAll(

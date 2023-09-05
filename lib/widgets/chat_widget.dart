@@ -50,13 +50,11 @@ class ChatWidget extends StatelessWidget {
                             vertical: 6,
                             horizontal: 15,
                           ),
-                          child: Expanded(
-                            child: TextWidget(
-                              label: msg,
-                              color: textColor,
-                              textAlign: TextAlign.end,
-                              fontsize: 18,
-                            ),
+                          child: TextWidget(
+                            label: msg,
+                            color: textColor,
+                            textAlign: TextAlign.end,
+                            fontsize: 18,
                           ),
                         ),
                       ),
@@ -101,24 +99,22 @@ class ChatWidget extends StatelessWidget {
                             vertical: 10,
                             horizontal: 15,
                           ),
-                          child: Expanded(
-                            child: DefaultTextStyle(
-                              style: TextStyle(
-                                color: textColor,
-                                fontSize: 18,
-                              ),
-                              child: AnimatedTextKit(
-                                isRepeatingAnimation: false,
-                                repeatForever: false,
-                                displayFullTextOnTap: true,
-                                totalRepeatCount: 1,
-                                animatedTexts: [
-                                  TyperAnimatedText(
-                                    speed: const Duration(milliseconds: 20),
-                                    msg.trim(),
-                                  ),
-                                ],
-                              ),
+                          child: DefaultTextStyle(
+                            style: TextStyle(
+                              color: textColor,
+                              fontSize: 18,
+                            ),
+                            child: AnimatedTextKit(
+                              isRepeatingAnimation: false,
+                              repeatForever: false,
+                              displayFullTextOnTap: true,
+                              totalRepeatCount: 1,
+                              animatedTexts: [
+                                TyperAnimatedText(
+                                  speed: const Duration(milliseconds: 20),
+                                  msg.trim(),
+                                ),
+                              ],
                             ),
                           ),
                         ),
